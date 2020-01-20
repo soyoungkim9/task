@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -19,8 +21,15 @@ public class fileUpload {
   private String tempDir = "file/temp";
   private String subDir = "/";
   private String[] fileType = {"jpg", "png", "xls"};
-  private long maxSize = 1024 * 1024 * 10; // 10M
-  private int maxCnt = 3;
+  private String maxSize = "1024 * 1024 * 10"; // 10M
+  private String maxCnt = "3";
+
+  /* 문자열로 된 수식 계산하는 메서드 */
+  public String calculateString(String n) throws Exception{
+    ScriptEngineManager mgr = new ScriptEngineManager();
+    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+    return engine.eval(n).toString();
+  }
 
   /* 중복된 파일에 대한 처리를 위한 가상 디렉토리 생성 메서드 (YYYY/MM/DD) */
   private void addSubDir() {
@@ -64,7 +73,7 @@ public class fileUpload {
 
   /* 파일개수 제한, 파일개수 체크 메서드 */
   private boolean checkFileCnt(HttpServletResponse response, List<FileItem> items) throws IOException {
-    if(items.size() <= maxCnt)
+    if(items.size() <= Integer.parseInt(maxCnt))
       return true;
     errorCnt++;
     output.put(response, "Fail", "The number of files cannot be more than " + maxCnt);
@@ -77,10 +86,10 @@ public class fileUpload {
     DiskFileItemFactory factory = new DiskFileItemFactory();
     factory.setSizeThreshold(1024 * 1024 * 1); // 1M
     factory.setRepository(new File(tempDir));
-
     ServletFileUpload upload = new ServletFileUpload(factory);
-    upload.setSizeMax(maxSize); // 10M
+
     try {
+      upload.setSizeMax(Long.parseLong(calculateString(maxSize)));
       items = upload.parseRequest(request);
     } catch (FileUploadBase.InvalidContentTypeException e) {
       errorCnt++;
@@ -92,7 +101,11 @@ public class fileUpload {
       errorCnt++;
       output.put(response, "Fail", "FileUploadException");
       e.printStackTrace();
+    } catch (Exception e) {
+      output.put(response, "Fail", "Exception");
+      e.printStackTrace();
     }
+
     if(!checkFileCnt(response, items)) return; // 파일 전체 개수 체크
     addSubDir();
 
@@ -153,11 +166,40 @@ public class fileUpload {
     return subDir;
   }
 
-  public long getMaxSize() {
+  public String getMaxSize() {
     return maxSize;
   }
 
-  public int getMaxCnt() {
+  public String getMaxCnt() {
     return maxCnt;
   }
+  /*
+  public String[] getFileType() {
+    return fileType;
+  }
+
+  public void setFileType(String[] fileType) {
+    this.fileType = fileType;
+  }
+
+  public void setRootDir(String rootDir) {
+    this.rootDir = rootDir;
+  }
+
+  public void setTempDir(String tempDir) {
+    this.tempDir = tempDir;
+  }
+
+  public void setSubDir(String subDir) {
+    this.subDir = subDir;
+  }
+
+  public void setMaxSize(String maxSize) {
+    this.maxSize = maxSize;
+  }
+
+  public void setMaxCnt(String maxCnt) {
+    this.maxCnt = maxCnt;
+  }
+  */
 }
