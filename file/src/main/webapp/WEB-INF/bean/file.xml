@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="util.FileUploadUtil" class="util.FileUploadUtil">
+    <property name="rootDir" value="file/upload"/>
+    <property name="tempDir" value="file/temp"/>
+    <property name="subDir" value="/"/>
+    <property name="fileType">
+      <array value-type="java.lang.String">
+        <value>jpg</value>
+        <value>png</value>
+        <value>xls</value>
+      </array>
+    </property>
+    <property name="maxSize" value="1024 * 1024 * 10"/> <!-- 10M -->
+    <property name="maxCnt" value="3"/>
+  </bean>
+</beans>

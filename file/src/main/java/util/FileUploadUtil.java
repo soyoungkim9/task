@@ -1,3 +1,5 @@
+package util;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
@@ -15,14 +17,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public class fileUpload {
+public class FileUploadUtil {
   private int errorCnt;
-  private String rootDir = "file/upload";
-  private String tempDir = "file/temp";
-  private String subDir = "/";
-  private String[] fileType = {"jpg", "png", "xls"};
-  private String maxSize = "1024 * 1024 * 10"; // 10M
-  private String maxCnt = "3";
+  private String rootDir;
+  private String tempDir;
+  private String subDir;
+  private String[] fileType;
+  private String maxSize;
+  private String maxCnt;
 
   /* 문자열로 된 수식 계산하는 메서드 */
   public String calculateString(String n) throws Exception{
@@ -84,7 +86,8 @@ public class fileUpload {
     List<FileItem> items = null;
 
     DiskFileItemFactory factory = new DiskFileItemFactory();
-    factory.setSizeThreshold(1024 * 1024 * 1); // 1M
+    // 임시폴더 설정 (안쓸경우 지우기)
+    factory.setSizeThreshold(1024 * 1024 * 1);
     factory.setRepository(new File(tempDir));
     ServletFileUpload upload = new ServletFileUpload(factory);
 
@@ -100,22 +103,20 @@ public class fileUpload {
     } catch (FileUploadException e) {
       errorCnt++;
       output.put(response, "Fail", "FileUploadException");
-      e.printStackTrace();
+      // e.printStackTrace();
     } catch (Exception e) {
       output.put(response, "Fail", "Exception");
-      e.printStackTrace();
+      // e.printStackTrace();
     }
 
     if(!checkFileCnt(response, items)) return; // 파일 전체 개수 체크
     addSubDir();
-
     Iterator<FileItem> iter = items.iterator();
     while (iter.hasNext()) {
       FileItem item = iter.next();
       // 파일 하나씩 에러 체크
       if (!item.isFormField()) {
         if (!checkFileType(response, item)) {
-          item.delete(); // temp파일 제거
           break;
         }
       }
@@ -141,8 +142,6 @@ public class fileUpload {
         } catch (Exception e) {
           errorCnt++;
           e.printStackTrace();
-        } finally {
-          item.delete();
         }
       }
     }
@@ -173,7 +172,7 @@ public class fileUpload {
   public String getMaxCnt() {
     return maxCnt;
   }
-  /*
+
   public String[] getFileType() {
     return fileType;
   }
@@ -189,7 +188,7 @@ public class fileUpload {
   public void setTempDir(String tempDir) {
     this.tempDir = tempDir;
   }
-
+ ;
   public void setSubDir(String subDir) {
     this.subDir = subDir;
   }
@@ -201,5 +200,4 @@ public class fileUpload {
   public void setMaxCnt(String maxCnt) {
     this.maxCnt = maxCnt;
   }
-  */
 }
