@@ -1,6 +1,4 @@
-package util;
-
-import base.BeansUtils;
+package base;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

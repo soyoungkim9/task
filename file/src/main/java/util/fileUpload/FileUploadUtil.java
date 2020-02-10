@@ -1,5 +1,6 @@
-package util;
+package util.fileUpload;
 
+import base.output;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
@@ -188,7 +189,7 @@ public class FileUploadUtil {
   public void setTempDir(String tempDir) {
     this.tempDir = tempDir;
   }
- ;
+
   public void setSubDir(String subDir) {
     this.subDir = subDir;
   }

@@ -1,11 +1,11 @@
 package base;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import util.FileUploadUtil;
+import util.fileUpload.FileUploadUtil;
 
 public class BeansUtils {
   // bean ID
-  private static String FILEUPLOAD_UTIL_ID = "util.FileUploadUtil";
+  private static String FILEUPLOAD_UTIL_ID = "util.fileUpload.FileUploadUtil";
 
   public static Object getBean(String beanId) {
     try {

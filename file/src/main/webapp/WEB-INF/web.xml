@@ -6,7 +6,7 @@
   version="4.0">
   <servlet>
     <servlet-name>upload</servlet-name>
-    <servlet-class>util.UploadServlet</servlet-class>
+    <servlet-class>base.UploadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>upload</servlet-name>
