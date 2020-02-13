@@ -16,6 +16,6 @@
       </array>
     </property>
     <property name="maxSize" value="1024 * 1024 * 10"/> <!-- 10M -->
-    <property name="maxCnt" value="3"/>
+    <property name="maxFileCnt" value="3"/>
   </bean>
 </beans>

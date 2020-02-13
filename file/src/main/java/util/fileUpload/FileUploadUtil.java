@@ -20,12 +20,13 @@ import java.util.UUID;
 
 public class FileUploadUtil {
   private int errorCnt;
+  private int fileCnt;
   private String rootDir;
   private String tempDir;
   private String subDir;
   private String[] fileType;
   private String maxSize;
-  private String maxCnt;
+  private String maxFileCnt;
 
   /* 문자열로 된 수식 계산하는 메서드 */
   public String calculateString(String n) throws Exception{
@@ -75,11 +76,11 @@ public class FileUploadUtil {
   }
 
   /* 파일개수 제한, 파일개수 체크 메서드 */
-  private boolean checkFileCnt(HttpServletResponse response, List<FileItem> items) throws IOException {
-    if(items.size() <= Integer.parseInt(maxCnt))
+  private boolean checkFileCnt(HttpServletResponse response) throws IOException {
+    if(fileCnt <= Integer.parseInt(maxFileCnt))
       return true;
     errorCnt++;
-    output.put(response, "Fail", "The number of files cannot be more than " + maxCnt);
+    output.put(response, "Fail", "The number of files cannot be more than " + maxFileCnt);
     return false;
   }
 
@@ -110,14 +111,14 @@ public class FileUploadUtil {
       // e.printStackTrace();
     }
 
-    if(!checkFileCnt(response, items)) return; // 파일 전체 개수 체크
     addSubDir();
     Iterator<FileItem> iter = items.iterator();
     while (iter.hasNext()) {
       FileItem item = iter.next();
       // 파일 하나씩 에러 체크
       if (!item.isFormField()) {
-        if (!checkFileType(response, item)) {
+        fileCnt++;
+        if (!checkFileCnt(response) || !checkFileType(response, item)) {
           break;
         }
       }
@@ -170,8 +171,8 @@ public class FileUploadUtil {
     return maxSize;
   }
 
-  public String getMaxCnt() {
-    return maxCnt;
+  public String getMaxFileCnt() {
+    return maxFileCnt;
   }
 
   public String[] getFileType() {
@@ -198,7 +199,7 @@ public class FileUploadUtil {
     this.maxSize = maxSize;
   }
 
-  public void setMaxCnt(String maxCnt) {
-    this.maxCnt = maxCnt;
+  public void setMaxFileCnt(String maxFileCnt) {
+    this.maxFileCnt = maxFileCnt;
   }
 }
