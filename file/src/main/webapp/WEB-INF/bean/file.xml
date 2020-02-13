@@ -4,7 +4,7 @@
        xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="util.FileUploadUtil" class="util.fileUpload.FileUploadUtil">
+  <bean id="FileUploadUtil" class="util.fileUpload.FileUploadUtil">
     <property name="rootDir" value="file/upload"/>
     <property name="tempDir" value="file/temp"/>
     <property name="subDir" value="/"/>

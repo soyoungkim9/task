@@ -5,7 +5,7 @@ import util.fileUpload.FileUploadUtil;
 
 public class BeansUtils {
   // bean ID
-  private static String FILEUPLOAD_UTIL_ID = "util.fileUpload.FileUploadUtil";
+  private static String FILEUPLOAD_UTIL_ID = "FileUploadUtil";
 
   public static Object getBean(String beanId) {
     try {
