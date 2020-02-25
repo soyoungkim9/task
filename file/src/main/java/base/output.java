@@ -2,13 +2,14 @@ package base;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class output {
   public static void put(HttpServletResponse response, String status, String msg) throws IOException {
-    PrintWriter out = response.getWriter();
+    response.setContentType("application/json; charset=UTF-8");
+    ServletOutputStream out = response.getOutputStream();
 
     JSONObject jsonOb = new JSONObject();
     JSONArray responseArr = new JSONArray();
@@ -18,6 +19,6 @@ public class output {
     responseArr.add(responseInfo);
     jsonOb.put("response", responseArr);
 
-    out.println(jsonOb);
+    out.println(jsonOb.toJSONString());
   }
 }
