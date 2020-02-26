@@ -12,4 +12,13 @@
     <servlet-name>upload</servlet-name>
     <url-pattern>/file/uploadServlet</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>download</servlet-name>
+    <servlet-class>base.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>download</servlet-name>
+    <url-pattern>/file/downloadServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
