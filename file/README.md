@@ -67,6 +67,6 @@ UI없이 파일다운로드를 테스트하기 위해 servlet구조로 작성 (G
 ![fail](img/fail2.png)
 
 ## 참고자료
-- http://www.devkuma.com/books/pages/1159 (시큐어코딩)
+
 - https://jtoday.tistory.com/87 (시큐어코딩)
 - https://openeg.co.kr/371 (시큐어코딩)
