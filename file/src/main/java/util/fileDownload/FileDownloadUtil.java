@@ -43,7 +43,7 @@ public class FileDownloadUtil {
     int read = 0;
     byte[] b = new byte[(int)f.length()];
 
-    BufferedInputStream in = null;
+    BufferedInputStream in = null; 
     BufferedOutputStream outs = null;
     try {
       in = new BufferedInputStream(new FileInputStream(f));
